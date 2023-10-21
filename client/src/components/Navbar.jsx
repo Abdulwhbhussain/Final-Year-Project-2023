@@ -25,6 +25,8 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  console.log(user);
+
   return (
     <header>
       <nav className={iconActive ? "nav-active" : ""}>
@@ -35,9 +37,11 @@ const Navbar = () => {
           <li>
             <NavLink to={"/"}>Home</NavLink>
           </li>
-          <li>
+          {token && !user.isAdmin && !user.isDoctor && (
+            <li>
             <NavLink to={"/doctors"}>Doctors</NavLink>
           </li>
+          )}
           {token && user.isAdmin && (
             <li>
               <NavLink to={"/dashboard/users"}>Dashboard</NavLink>
@@ -51,9 +55,13 @@ const Navbar = () => {
               <li>
                 <NavLink to={"/notifications"}>Notifications</NavLink>
               </li>
-              <li>
-                <NavLink to={"/applyfordoctor"}>Apply for doctor</NavLink>
-              </li>
+              {
+                !user.isDoctor && (
+                  <li>
+                  <NavLink to={"/applyfordoctor"}>Apply for doctor</NavLink>
+                </li>
+                )
+              }
               <li>
                 <HashLink to={"/#contact"}>Contact Us</HashLink>
               </li>
@@ -62,6 +70,22 @@ const Navbar = () => {
               </li>
             </>
           )}
+          {/* {token && user.isDoctor && !user.isAdmin && (
+            <>
+              <li>
+                <NavLink to={"/appointments"}>Appointments</NavLink>
+              </li>
+              <li>
+                <NavLink to={"/notifications"}>Notifications</NavLink>
+              </li>
+              <li>
+                <HashLink to={"/#contact"}>Contact Us</HashLink>
+              </li>
+              <li>
+                <NavLink to={"/profile"}>Profile</NavLink>
+              </li>
+            </>
+          )} */}
           {!token ? (
             <>
               <li>
